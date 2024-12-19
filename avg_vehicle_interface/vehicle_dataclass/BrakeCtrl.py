@@ -22,7 +22,7 @@ class BrakeCtrl:
     def get_value(self, field_name):
 
         if not hasattr(self, field_name):
-            raise AttributeError(f"'BrakeCtrl' object has no attribute '{field_name}'")
+            raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{field_name}'")
         return getattr(self, field_name)
 
     def add_cycle_count(self):
