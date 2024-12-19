@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>vehicle_interface</name>
+  <version>0.0.0</version>
+  <description>vehicle interface for Hyundai ioniq 5</description>
+  <maintainer email="yhjeon@avgenius.kr">JEON YANG HO</maintainer>
+  <license>TODO: License declaration</license>
+  <depend>std_msgs</depend>
+
+  <!-- Some necessary topic subscription of control commands topics from Autoware to control your vehicle  -->
+  <depend>autoware_auto_control_msgs/msg/AckermannControlCommand</depend>
+  <depend>autoware_auto_vehicle_msgs/msg/GearCommand</depend>
+  <depend>tier4_control_msgs/msg/GateMode</depend>
+  <depend>tier4_vehicle_msgs/msg/VehicleEmergencyStamped</depend>
+  <depend>autoware_auto_vehicle_msgs/msg/TurnIndicatorsCommand</depend>
+  <depend>autoware_auto_vehicle_msgs/msg/HazardLightsCommand</depend>
+  <depend>tier4_vehicle_msgs/msg/ActuationCommandStamped</depend>
+  <depend>sensor_msgs/msg/Imu</depend>
+
+
+  <!-- Some necessary topic publication of vehicle status topics from vehicle interface to Autoware  -->
+  <depend>tier4_vehicle_msgs/msg/BatteryStatus</depend>
+  <depend>autoware_auto_vehicle_msgs/msg/GearReport</depend>
+  <depend>autoware_auto_vehicle_msgs/msg/HazardLightsReport</depend>
+  <depend>autoware_auto_vehicle_msgs/msg/TurnIndicatorsReport</depend>
+  <depend>autoware_auto_vehicle_msgs/msg/SteeringReport</depend>
+  <depend>autoware_auto_vehicle_msgs/msg/VelocityReport</depend>
+
+
+  <export>
+    <build_type>ament_python</build_type>
+    <pythonpath>${prefix}/lib/${package_name}</pythonpath>
+  </export>
+</package>
