@@ -7,20 +7,12 @@ from autoware_auto_vehicle_msgs.msg import (ControlModeReport,
                                             TurnIndicatorsReport,
                                             SteeringReport,
                                             VelocityReport)
-from sensor_msgs.msg import Imu
 import can
 import rclpy
 import threading
 from struct import unpack
 
-from kap_dataclass.DriveStaFb import DriveStaFb
-from kap_dataclass.BrakeStaFb import BrakeStaFb
-from kap_dataclass.SteerStaFb import SteerStaFb
-from kap_dataclass.VehicleStaFb import VehicleStaFb
-from kap_dataclass.VehicleWorkStaFb import VehicleWorkStaFb
-from kap_dataclass.PowerStaFb import PowerStaFb
-from kap_dataclass.VehicleFltSta import VehicleFltSta
-from kap_dataclass.WheelRpmFb import WheelRpmFb
+
 
 
 class CANReceiverNode(Node):
@@ -46,14 +38,7 @@ class CANReceiverNode(Node):
         self.msg_obj_velocity_rpt = VelocityReport()
 
         # Report data class
-        self.drive_sta_fb = DriveStaFb()
-        self.brake_sta_fb = BrakeStaFb()
-        self.steer_sta_fb = SteerStaFb()
-        self.vehicle_sta_fb = VehicleStaFb()
-        self.vehicle_work_sta_fb = VehicleWorkStaFb()
-        self.power_sta_fb = PowerStaFb()
-        self.vehicle_flt_sta = VehicleFltSta()
-        self.wheel_rpm_fb = WheelRpmFb()
+
 
         # vehicle status report publisher
         self.control_mode_rpt_pub = self.create_publisher(ControlModeReport, '/vehicle/status/control_mode', 10)
@@ -64,16 +49,14 @@ class CANReceiverNode(Node):
                                                              '/vehicle/status/turn_indicators_status', 10)
         self.steering_rpt_pub = self.create_publisher(SteeringReport, '/vehicle/status/steering_status', 10)
         self.velocity_rpt_pub = self.create_publisher(VelocityReport, '/vehicle/status/velocity_status', 10)
-        # Imu message Subscription for heading
-        self.imu_subscriber = self.create_subscription(Imu, '/imu_raw', self.imu_callback, 10)
 
         # publisher timer
-        self.control_mode_rpt_timer = self.create_timer(0.02, self.control_mode_rpt_timer_callback)
-        self.gear_rpt_timer = self.create_timer(0.02, self.gear_rpt_timer_callback)
-        self.hazard_lights_rpt_timer = self.create_timer(0.02, self.hazard_lights_rpt_timer_callback)
-        self.turn_indicators_rpt_timer = self.create_timer(0.02, self.turn_indicators_rpt_timer_callback)
-        self.steering_rpt_timer = self.create_timer(0.02, self.steering_rpt_timer_callback)
-        self.velocity_rpt_timer = self.create_timer(0.02, self.velocity_rpt_timer_callback)
+        self.control_mode_rpt_timer = self.create_timer(0.05, self.control_mode_rpt_timer_callback)
+        self.gear_rpt_timer = self.create_timer(0.05, self.gear_rpt_timer_callback)
+        self.hazard_lights_rpt_timer = self.create_timer(0.05, self.hazard_lights_rpt_timer_callback)
+        self.turn_indicators_rpt_timer = self.create_timer(0.05, self.turn_indicators_rpt_timer_callback)
+        self.steering_rpt_timer = self.create_timer(0.05, self.steering_rpt_timer_callback)
+        self.velocity_rpt_timer = self.create_timer(0.05, self.velocity_rpt_timer_callback)
 
         self.heading_rate = 0.0
 
